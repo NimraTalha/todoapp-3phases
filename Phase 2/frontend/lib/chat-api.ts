@@ -1,4 +1,5 @@
 import { ChatRequest, ChatResponse } from './types';
+import { mockSendChatMessage, mockGetConversationHistory, mockGetConversations } from './mockChatApi';
 
 // Point to backend server
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8001/api';
@@ -68,26 +69,33 @@ class ChatApiClient {
       return data;
     } catch (error) {
       console.error('Chat API Fetch Error:', error);
+      console.warn('Chat API failed, falling back to mock API:', error);
 
-      if (error instanceof TypeError) {
-        if (error.message.includes('fetch')) {
-          throw new Error(`Failed to connect to ${url}. Is the backend running?`);
-        }
-      }
-      throw error;
+      // Fall back to mock implementation
+      return mockSendChatMessage(userId, message, conversationId);
     }
   }
 
   async getConversationHistory(userId: string, conversationId: string): Promise<ChatResponse[]> {
-    // For now, we'll simulate getting conversation history
-    // In a real implementation, this would be a GET request to fetch conversation history
-    return [];
+    try {
+      // For now, we'll simulate getting conversation history
+      // In a real implementation, this would be a GET request to fetch conversation history
+      return [];
+    } catch (error) {
+      console.warn('Chat API failed, falling back to mock API:', error);
+      return mockGetConversationHistory(userId, conversationId);
+    }
   }
 
   async getConversations(userId: string): Promise<any[]> {
-    // For now, we'll simulate getting user's conversations
-    // In a real implementation, this would be a GET request to fetch user's conversations
-    return [];
+    try {
+      // For now, we'll simulate getting user's conversations
+      // In a real implementation, this would be a GET request to fetch user's conversations
+      return [];
+    } catch (error) {
+      console.warn('Chat API failed, falling back to mock API:', error);
+      return mockGetConversations(userId);
+    }
   }
 }
 

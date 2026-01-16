@@ -16,7 +16,7 @@ interface ChatContextType {
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
-export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+const ChatProviderComponent: React.FC<{ children: ReactNode }> = ({ children }) => {
   const chatHook = useChat();
 
   return (
@@ -25,6 +25,8 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     </ChatContext.Provider>
   );
 };
+
+export default ChatProviderComponent;
 
 export const useChatContext = () => {
   const context = useContext(ChatContext);

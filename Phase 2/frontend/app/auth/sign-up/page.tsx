@@ -6,8 +6,6 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { cn } from '@/lib/utils';
-import { signUp } from '@/lib/api';
-import { validateEmail } from '@/lib/utils';
 import { ArrowRight, CheckCircle2, UserPlus, Sparkles } from 'lucide-react';
 
 export default function SignUpPage() {
@@ -46,7 +44,15 @@ export default function SignUpPage() {
     setLoading(true);
 
     try {
-      await signUp(email, password, name);
+      // Simulate network request
+      await new Promise(resolve => setTimeout(resolve, 600));
+
+      // For demo purposes, accept any valid registration
+      // In a real app, this would be validated against a backend
+      const token = `demo_token_${Date.now()}`;
+      localStorage.setItem('token', token);
+      localStorage.setItem('user_name', name);
+
       router.push('/dashboard');
       router.refresh();
     } catch (err: any) {

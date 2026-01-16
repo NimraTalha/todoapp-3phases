@@ -161,14 +161,6 @@ class ApiClient {
       localStorage.removeItem('token');
       localStorage.removeItem('user_name');
     }
-
-    // Call the backend logout endpoint if needed
-    try {
-      await this.request('/auth/logout', { method: 'POST' });
-    } catch (error) {
-      // Even if the backend call fails, we still clear the local token
-      console.error('Sign out error:', error);
-    }
   }
 
   // Todo methods

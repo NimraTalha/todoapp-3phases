@@ -6,8 +6,6 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { cn } from '@/lib/utils';
-import { signIn } from '@/lib/api';
-import { validateEmail } from '@/lib/utils';
 import { ArrowRight, CheckCircle2, Lock, Mail, Sparkles } from 'lucide-react';
 
 export default function SignInPage() {
@@ -33,8 +31,18 @@ export default function SignInPage() {
 
     setLoading(true);
 
+    // Simple authentication simulation
+    // In a real app, this would call an API
     try {
-      await signIn(email, password);
+      // Simulate network request
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // For demo purposes, accept any email/password combination
+      // In a real app, this would be validated against a backend
+      const token = `demo_token_${Date.now()}`;
+      localStorage.setItem('token', token);
+      localStorage.setItem('user_name', email.split('@')[0]); // Use part of email as name
+
       router.push('/dashboard');
       router.refresh();
     } catch (err: any) {

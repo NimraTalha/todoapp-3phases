@@ -25,11 +25,11 @@ export default function HeroFull() {
           New — Landing Experience
         </div>
 
-        <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] bg-clip-text text-transparent bg-gradient-to-r from-green-700 via-green-800 to-green-900 mb-6 relative">
+        <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-green-900 dark:text-green-200 mb-6 relative">
           <span className="relative z-10">A Todo Experience</span>
           <br />
           <span className="relative z-10">Like You've Never Seen.</span>
-          <span className="absolute top-0 left-0 w-full h-full bg-white opacity-0 pointer-events-none rounded-lg blur-sm brightness-200 white-bright-effect"></span>
+          <span className="absolute top-0 left-0 w-full h-full bg-green-500 opacity-0 pointer-events-none rounded-lg blur-sm brightness-200 green-bright-effect"></span>
         </h1>
 
         <p className="text-xl md:text-2xl text-purple-400 body max-w-3xl mx-auto mb-10">

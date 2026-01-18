@@ -290,6 +290,15 @@
     opacity: 1;
   }
 
+  /* Green bright effect */
+  .green-bright-effect {
+    transition: opacity 0.3s ease;
+  }
+
+  .green-bright-effect:hover {
+    opacity: 1;
+  }
+
   /* Dark olive green theme */
   .dark-olive-green-theme {
     background: linear-gradient(135deg, #3a5f0b, #2c4d09) !important; /* dark olive green */

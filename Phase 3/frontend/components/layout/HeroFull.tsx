@@ -25,11 +25,11 @@ export default function HeroFull() {
           New — Landing Experience
         </div>
 
-        <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-green-900 dark:text-green-200 mb-6 relative">
+        <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-amber-900 dark:text-amber-200 mb-6 relative">
           <span className="relative z-10">A Todo Experience</span>
           <br />
           <span className="relative z-10">Like You've Never Seen.</span>
-          <span className="absolute top-0 left-0 w-full h-full bg-green-500 opacity-0 pointer-events-none rounded-lg blur-sm brightness-200 green-bright-effect"></span>
+          <span className="absolute top-0 left-0 w-full h-full bg-amber-500 opacity-0 pointer-events-none rounded-lg blur-sm brightness-200 green-bright-effect"></span>
         </h1>
 
         <p className="text-xl md:text-2xl text-purple-400 body max-w-3xl mx-auto mb-10">
@@ -39,7 +39,7 @@ export default function HeroFull() {
 
         <div className="flex items-center justify-center gap-4">
           <Link href="/auth/sign-up">
-            <Button variant="primary" size="lg" className="h-16 px-10 rounded-2xl bg-gradient-to-r from-green-700 to-green-900 hover:from-green-600 hover:to-green-800">
+            <Button variant="primary" size="lg" className="h-16 px-10 rounded-2xl bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800">
               Get Started
             </Button>
           </Link>

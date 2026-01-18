@@ -10,12 +10,12 @@
   width: min(90vw, 400px);
   height: min(70vh, 600px);
   max-height: 600px;
-  background: linear-gradient(135deg, rgba(247, 247, 220, 0.9), rgba(230, 230, 200, 0.7)); /* olive green gradient */
+  background: linear-gradient(135deg, rgba(247, 247, 220, 0.95), rgba(230, 230, 200, 0.8)); /* olive green gradient */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 16px;
-  border: 1px solid rgba(168, 152, 96, 0.3); /* olive green border */
-  box-shadow: 0 8px 32px 0 rgba(168, 152, 96, 0.25); /* olive green shadow */
+  border: 1px solid rgba(168, 152, 96, 0.4); /* olive green border */
+  box-shadow: 0 8px 32px 0 rgba(106, 97, 69, 0.3); /* olive green shadow */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -24,14 +24,14 @@
 
 /* Dark theme support */
 [data-theme='dark'] .chatPanel {
-  background: linear-gradient(135deg, rgba(100, 90, 40, 0.3), rgba(70, 60, 20, 0.3)); /* darker olive green gradient */
-  border: 1px solid rgba(168, 152, 96, 0.2);
+  background: linear-gradient(135deg, rgba(100, 90, 40, 0.4), rgba(70, 60, 20, 0.4)); /* darker olive green gradient */
+  border: 1px solid rgba(168, 152, 96, 0.3);
 }
 
 .header {
   padding: 16px;
-  background: rgba(168, 152, 96, 0.15); /* olive green background */
-  border-bottom: 1px solid rgba(168, 152, 96, 0.2);
+  background: rgba(168, 152, 96, 0.2); /* olive green background */
+  border-bottom: 1px solid rgba(168, 152, 96, 0.3);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -74,6 +74,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  background: rgba(247, 247, 220, 0.2); /* olive green tinted background for messages */
 }
 
 @keyframes slideInRight {

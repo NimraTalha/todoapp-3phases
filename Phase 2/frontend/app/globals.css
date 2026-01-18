@@ -319,3 +319,12 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-muted-foreground/40;
 }
+
+/* Green bright effect */
+.green-bright-effect {
+  transition: opacity 0.3s ease;
+}
+
+.green-bright-effect:hover {
+  opacity: 0.2;
+}

@@ -5,19 +5,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from .core.config import settings
 from .api import tasks, auth
 from .api.routes import chat
+from mangum import Mangum
 
-from contextlib import asynccontextmanager
-from .db import create_db_and_tables, get_async_session
+from .db import get_async_session
 from fastapi import Depends
 from sqlmodel.ext.asyncio.session import AsyncSession
 from .models import user, task # Import models to register them with SQLModel
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    await create_db_and_tables()
-    yield
-
-app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
+app = FastAPI(title=settings.PROJECT_NAME)
 
 app.add_middleware(
     CORSMiddleware,
@@ -65,3 +60,10 @@ async def test_db(db: AsyncSession = Depends(get_async_session)):
         return {"status": "ok", "db": "connected"}
     except Exception as e:
         return {"status": "error", "db": str(e)}
+
+# Create Mangum handler for Vercel
+handler = Mangum(app)
+
+# For Vercel compatibility
+def main(event, context):
+    return handler(event, context)

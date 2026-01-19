@@ -4,7 +4,9 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from .core.config import settings
 
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
+import os
 
+# For serverless functions, use minimal connection pool settings
 # Neon requires sslmode=require for secure connections
 # asyncpg uses 'postgresql+asyncpg://'
 database_url = settings.DATABASE_URL
@@ -30,26 +32,27 @@ if hostname not in ("localhost", "127.0.0.1", ""):
     # asyncpg expects `ssl` argument (True or SSLContext) instead of sslmode
     connect_args = {"ssl": True}
 
+# For serverless functions, use minimal pool settings to avoid connection issues
 engine = create_async_engine(
     database_url,
-    echo=True,
+    echo=bool(os.getenv("SQLALCHEMY_ECHO")),  # Only enable if explicitly set
     future=True,
     connect_args=connect_args,
-    pool_pre_ping=True,  # Check connection liveness before using
-    pool_recycle=300,    # Recycle connections every 5 minutes
-    pool_size=10,        # Set pool size
-    max_overflow=20      # Allow overflow
+    pool_pre_ping=True,    # Check connection liveness before using
+    pool_recycle=300,      # Recycle connections every 5 minutes
+    pool_size=1,           # Minimal pool size for serverless
+    max_overflow=2,        # Allow minimal overflow
+    pool_timeout=20,       # Timeout for getting connection from pool
+    pool_reset_on_return="commit"  # Reset connection when returned to pool
 )
 
 from sqlmodel import SQLModel
 
 async def get_async_session() -> AsyncSession:
-    async_session = sessionmaker(
-        engine, class_=AsyncSession, expire_on_commit=False
-    )
-    async with async_session() as session:
+    async with AsyncSession(engine, expire_on_commit=False) as session:
         yield session
 
+# For serverless, we'll create tables on demand rather than at startup
 async def create_db_and_tables():
     async with engine.begin() as conn:
         await conn.run_sync(SQLModel.metadata.create_all)

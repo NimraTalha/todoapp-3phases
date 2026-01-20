@@ -1,6 +1,11 @@
 import { Todo, CreateTodoRequest, UpdateTodoRequest } from './types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+let API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+
+// Ensure the API URL ends with '/api' if it doesn't already
+if (!API_BASE_URL.endsWith('/api')) {
+  API_BASE_URL = API_BASE_URL + '/api';
+}
 
 // Base API client with JWT handling
 class ApiClient {

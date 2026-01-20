@@ -53,6 +53,7 @@ class ApiClient {
   // Generic request method
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
+    console.log('Making API request to:', url); // Debug log
     const config: RequestInit = {
       ...options,
       headers: {
@@ -63,6 +64,7 @@ class ApiClient {
 
     try {
       const response = await fetch(url, config);
+      console.log('API response status:', response.status); // Debug log
 
       // Handle token expiration
       if (response.status === 401) {
@@ -77,6 +79,7 @@ class ApiClient {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
+        console.error('API error response:', errorData); // Debug log
         throw new Error(errorData.message || `API request failed: ${response.status}`);
       }
 
@@ -101,7 +104,11 @@ class ApiClient {
 
   // Auth methods
   async signIn(email: string, password: string): Promise<{ user: any; token: string }> {
-    const response = await fetch(`${this.baseUrl}/auth/sign-in`, {
+    const url = `${this.baseUrl}/auth/sign-in`;
+    console.log('Making sign-in request to:', url); // Debug log
+    console.log('Sign-in payload:', { email }); // Debug log (not logging password for security)
+
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -109,12 +116,22 @@ class ApiClient {
       body: JSON.stringify({ email, password }),
     });
 
+    console.log('Sign-in response status:', response.status); // Debug log
+
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorText = await response.text(); // Get raw text instead of parsing JSON
+      console.error('Sign-in error response text:', errorText); // Debug log
+      let errorData;
+      try {
+        errorData = JSON.parse(errorText);
+      } catch (e) {
+        errorData = { detail: errorText };
+      }
       throw new Error(errorData.detail || errorData.message || 'Sign in failed');
     }
 
     const data = await response.json();
+    console.log('Sign-in successful, received data:', data); // Debug log
 
     // Store token and user name in localStorage
     if (typeof window !== 'undefined') {
@@ -130,7 +147,11 @@ class ApiClient {
   }
 
   async signUp(email: string, password: string, name: string): Promise<{ user: any; token: string }> {
-    const response = await fetch(`${this.baseUrl}/auth/sign-up`, {
+    const url = `${this.baseUrl}/auth/sign-up`;
+    console.log('Making sign-up request to:', url); // Debug log
+    console.log('Sign-up payload:', { email, name }); // Debug log (not logging password for security)
+
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -138,12 +159,22 @@ class ApiClient {
       body: JSON.stringify({ email, password, name }),
     });
 
+    console.log('Sign-up response status:', response.status); // Debug log
+
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorText = await response.text(); // Get raw text instead of parsing JSON
+      console.error('Sign-up error response text:', errorText); // Debug log
+      let errorData;
+      try {
+        errorData = JSON.parse(errorText);
+      } catch (e) {
+        errorData = { detail: errorText };
+      }
       throw new Error(errorData.detail || errorData.message || 'Sign up failed');
     }
 
     const data = await response.json();
+    console.log('Sign-up successful, received data:', data); // Debug log
 
     // Store token and user name in localStorage
     if (typeof window !== 'undefined') {

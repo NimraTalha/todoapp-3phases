@@ -45,4 +45,7 @@ asyncio.run(setup_db())
 
 # Start the application
 echo "Starting the application..."
-exec uvicorn app.main:app --host=0.0.0.0 --port=\${PORT:-8000}
+if [ -z "\$PORT" ]; then
+  PORT=8000
+fi
+exec uvicorn app.main:app --host=0.0.0.0 --port=\$PORT

@@ -13,13 +13,15 @@ from .models import user, task # Import models to register them with SQLModel
 
 app = FastAPI(title=settings.PROJECT_NAME)
 
-# Configure CORS - for production, be more restrictive
+# Configure CORS - allowing all origins for now (restrict in production)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with your frontend domain
+    allow_origins=["*"],  # Allow all origins for development
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    # Allow credentials to be sent with cross-origin requests
+    allow_origin_regex=".*",  # Allow any origin
 )
 
 @app.middleware("http")

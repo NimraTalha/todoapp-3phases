@@ -1,33 +1,40 @@
-# Todo Backend API with AI Chatbot Integration
+---
+title: Todo Backend with AI Chatbot
+emoji: 📝
+colorFrom: purple
+colorTo: green
+sdk: docker
+pinned: false
+license: mit
+---
 
-## Overview
-FastAPI backend for The Evolution of Todo - Phase II & III featuring an intelligent AI Todo Assistant powered by Cohere.
+# Todo Backend with AI Chatbot
 
-## AI Magic Highlights
+This is a backend service for a Todo application with AI chatbot functionality powered by Cohere.
 
-This application features an intelligent AI Todo Assistant powered by Cohere's command-r-plus model. The chatbot enables users to manage their tasks using natural language through:
+## Endpoints
 
-- **Natural Language Task Management**: Add, list, complete, update, and delete tasks using conversational commands
-- **Identity Queries**: Ask "Who am I?" to retrieve your user information
-- **Multi-Step Operations**: Chain multiple operations in a single message (e.g., "Add meeting and list all tasks")
-- **Context-Aware Conversations**: Maintains conversation history and context across interactions
-- **Secure Integration**: All AI operations enforce user isolation and JWT authentication
+- `/health` - Health check
+- `/api/ping` - Ping endpoint
+- `/api/auth/sign-in` - User sign in
+- `/api/auth/sign-up` - User sign up
+- `/api/tasks/` - Todo operations
+- `/api/{user_id}/chat` - AI chatbot endpoint
 
-## Run Instructions
-1. Install dependencies: `pip install -r requirements.txt`
-2. Configure `.env` from `.env.example` (ensure COHERE_API_KEY is set)
-3. Run uvicorn: `uvicorn app.main:app --reload`
+## Environment Variables
 
-## API Documentation
-Once running, visit [http://localhost:8000/docs](http://localhost:8000/docs)
+- `BETTER_AUTH_SECRET` - Secret for JWT authentication
+- `COHERE_API_KEY` - API key for Cohere AI service
+- `DATABASE_URL` - PostgreSQL database URL
 
-## AI Chatbot API
-- `POST /api/{user_id}/chat` - Send a message to the AI assistant
+## Usage
 
-The AI chatbot leverages a Model Context Protocol (MCP) architecture with specialized tools:
-- `add_task` - Create new tasks
-- `list_tasks` - Retrieve tasks with filtering
-- `complete_task` - Mark tasks as complete
-- `delete_task` - Remove tasks
-- `update_task` - Modify task properties
-- `get_current_user` - Retrieve user identity
+This backend is designed to work with the Todo frontend application.
+
+## About
+
+This backend provides a complete API for a todo application with AI chatbot functionality. It uses:
+- FastAPI for the web framework
+- SQLModel for database modeling
+- Cohere for AI chatbot functionality
+- JWT for authentication

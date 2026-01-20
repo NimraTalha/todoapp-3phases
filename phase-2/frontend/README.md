@@ -57,6 +57,12 @@ NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:8000
 BETTER_AUTH_SECRET=your-secret-key
 ```
 
+> Note: Change `BETTER_AUTH_SECRET` in production to a strong, randomly generated secret.
+
+### Production Deployment Configuration
+
+When deploying to production (e.g., Vercel), you'll need to update the `NEXT_PUBLIC_API_URL` to point to your deployed backend API. See `API_CONFIGURATION.md` for detailed instructions on configuring the API URL for deployed environments.
+
 ## Why This UI Feels Premium
 
 - **Visual Hierarchy**: Carefully crafted spacing and typography create clear information architecture

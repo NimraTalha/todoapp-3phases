@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { cn, validateEmail } from '@/lib/utils';
 import { ArrowRight, CheckCircle2, Lock, Mail, Sparkles } from 'lucide-react';
+import { signIn as signInAPI } from '@/lib/api';
 
 export default function SignInPage() {
   const [email, setEmail] = React.useState('');
@@ -31,18 +32,11 @@ export default function SignInPage() {
 
     setLoading(true);
 
-    // Simple authentication simulation
-    // In a real app, this would call an API
     try {
-      // Simulate network request
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Call the real authentication API
+      const data = await signInAPI(email, password);
 
-      // For demo purposes, accept any email/password combination
-      // In a real app, this would be validated against a backend
-      const token = `demo_token_${Date.now()}`;
-      localStorage.setItem('token', token);
-      localStorage.setItem('user_name', email.split('@')[0]); // Use part of email as name
-
+      // Token and user info are automatically stored in localStorage by the API client
       router.push('/dashboard');
       router.refresh();
     } catch (err: any) {

@@ -1,0 +1,8 @@
+# Railway configuration
+
+[build]
+builder = "dockerfile"
+
+[deploy]
+restart_policy_type = "ON_FAILURE"
+restart_policy_max_retries = 10

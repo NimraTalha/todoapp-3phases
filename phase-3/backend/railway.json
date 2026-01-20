@@ -1,0 +1,12 @@
+{
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfile": "Dockerfile"
+  },
+  "deploy": {
+    "numInstances": 1,
+    "schedule": "",
+    "stopTimeout": 5,
+    "autoDeploy": true
+  }
+}

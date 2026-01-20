@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { cn, validateEmail } from '@/lib/utils';
 import { ArrowRight, CheckCircle2, UserPlus, Sparkles } from 'lucide-react';
+import { signUp as signUpAPI } from '@/lib/api';
 
 export default function SignUpPage() {
   const [name, setName] = React.useState('');
@@ -44,15 +45,10 @@ export default function SignUpPage() {
     setLoading(true);
 
     try {
-      // Simulate network request
-      await new Promise(resolve => setTimeout(resolve, 600));
+      // Call the real sign-up API
+      const data = await signUpAPI(email, password, name);
 
-      // For demo purposes, accept any valid registration
-      // In a real app, this would be validated against a backend
-      const token = `demo_token_${Date.now()}`;
-      localStorage.setItem('token', token);
-      localStorage.setItem('user_name', name);
-
+      // Token and user info are automatically stored in localStorage by the API client
       router.push('/dashboard');
       router.refresh();
     } catch (err: any) {

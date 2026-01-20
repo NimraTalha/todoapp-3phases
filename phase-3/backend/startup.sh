@@ -2,10 +2,20 @@
 
 # startup.sh - Script to initialize the application with database setup
 
+# Check if DATABASE_URL is set
+if [ -z "$DATABASE_URL" ]; then
+  echo "ERROR: DATABASE_URL environment variable is not set"
+  echo "Please make sure you have provisioned a PostgreSQL database in Railway"
+  exit 1
+fi
+
+echo "Using DATABASE_URL: $DATABASE_URL"
+
 # Wait for database to be ready and run any pending migrations
 echo "Waiting for database to be ready..."
 python -c "
 import asyncio
+import os
 import time
 from app.db import engine
 from sqlalchemy import text
@@ -25,7 +35,8 @@ async def wait_for_db():
             time.sleep(2)
     else:
         print('Could not connect to database after 30 attempts')
-        exit(1)
+        # Don't exit here, let the app start and handle DB issues at runtime
+        print('Continuing startup, database connection will be retried at runtime')
 
 asyncio.run(wait_for_db())
 "
@@ -34,18 +45,22 @@ asyncio.run(wait_for_db())
 echo "Creating database tables..."
 python -c "
 import asyncio
+import os
 from app.db import create_db_and_tables
 
 async def setup_db():
-    await create_db_and_tables()
-    print('Database tables created')
+    try:
+        await create_db_and_tables()
+        print('Database tables created')
+    except Exception as e:
+        print(f'Warning: Could not create database tables: {e}')
+        print('This might be because the database is not yet ready, continuing startup...')
 
 asyncio.run(setup_db())
 "
 
 # Start the application
 echo "Starting the application..."
-if [ -z "\$PORT" ]; then
-  PORT=8000
-fi
+PORT=\${PORT:-8000}
+echo "Using port: \$PORT"
 exec uvicorn app.main:app --host=0.0.0.0 --port=\$PORT

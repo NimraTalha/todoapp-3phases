@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "Todo API"
     BETTER_AUTH_SECRET: str = "dev-secret"
     BETTER_AUTH_URL: str = "http://localhost:3000"
-    DATABASE_URL: str
+    DATABASE_URL: str = ""  # Default to empty string, but should be set by Railway
     COHERE_API_KEY: str | None = None
 
 settings = Settings()

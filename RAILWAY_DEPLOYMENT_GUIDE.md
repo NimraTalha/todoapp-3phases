@@ -32,7 +32,7 @@ COHERE_API_KEY=your_cohere_api_key_here
 BETTER_AUTH_SECRET=your_strong_secret_here
 ```
 
-Note: DATABASE_URL will be automatically populated if you provision a PostgreSQL database in the next step.
+Note: DATABASE_URL will be automatically populated when you provision a PostgreSQL database in the next step.
 
 ### 3. Provision a Database
 

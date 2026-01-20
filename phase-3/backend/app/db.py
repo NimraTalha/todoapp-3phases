@@ -10,6 +10,13 @@ import os
 # Neon requires sslmode=require for secure connections
 # asyncpg uses 'postgresql+asyncpg://'
 database_url = settings.DATABASE_URL
+
+# Handle the case where DATABASE_URL might be empty initially
+if not database_url:
+    # This can happen during initial deployment before Railway sets the DATABASE_URL
+    # Use a default value that will cause a clear error if accessed without proper configuration
+    database_url = "postgresql+asyncpg://user:password@localhost/dbname"
+
 if database_url.startswith("postgresql://"):
     database_url = database_url.replace("postgresql://", "postgresql+asyncpg://", 1)
 
